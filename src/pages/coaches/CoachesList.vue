@@ -20,3 +20,16 @@ const store = useStore();
 const filteredCoaches = computed(() => store.allCoaches);
 const hasCoaches = computed(() => store.hasCoaches);
 </script>
+
+<style scoped>
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+</style>
