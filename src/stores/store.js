@@ -23,8 +23,8 @@ export const useStore = defineStore('store', {
   }),
 
   getters: {
-    coaches: state => state.coaches,
-    hasCoaches: state => state.coaches && state.coaches.lenght > 0,
+    allCoaches: state => state.coaches,
+    hasCoaches: state => state.coaches && state.coaches.length > 0,
   },
 
   actions: {},
