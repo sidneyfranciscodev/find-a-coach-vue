@@ -6,8 +6,8 @@
       <span v-for="area in areas" :key="area">{{ area }}</span>
     </div>
     <div class="actions">
-      <router-link :to="contactLink">Contact</router-link>
-      <router-link :to="detailsLink">Details</router-link>
+      <base-button link mode="outline" :to="contactLink">Contact</base-button>
+      <base-button link :to="detailsLink">Details</base-button>
     </div>
   </li>
 </template>
@@ -26,6 +26,11 @@ const detailsLink = computed(() => route.path + '/' + props.id);
 
 <style lang="scss" scoped>
 li {
+  margin: 1rem 0;
+  border: 1px solid #424242;
+  border-radius: 12px;
+  padding: 1rem;
+
   h3 {
     font-size: 1.5rem;
   }
