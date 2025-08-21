@@ -13,8 +13,10 @@
 </template>
 
 <script setup>
-import { computed, route } from 'vue';
+import { computed } from 'vue'
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const props = defineProps(['id', 'firstName', 'lastName', 'rate', 'areas'])
 
 const fullName = computed(() => props.firstName + '' + props.lastName);
