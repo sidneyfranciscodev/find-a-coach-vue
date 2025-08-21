@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import CoachItem from '@/components/layout/coaches/CoachItem.vue';
+import CoachItem from '@/components/coaches/CoachItem.vue';
 import { useStore } from '@/stores/store.js';
 import { computed } from 'vue'
 
