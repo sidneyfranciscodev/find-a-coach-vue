@@ -6,13 +6,20 @@
       <router-link to="/register">Register as Coach</router-link>
     </div>
     <ul v-if="hasCoaches">
-      <li v-for="coach in filteredCoaches" :key="coach.id">{{ coach.firstName }}</li>
+      <coach-item v-for="coach in filteredCoaches" :key="coach.id"
+      :id="coach.id"
+      :first-name="coach.firstName"
+      :last-name="coach.lastName"
+      :areas="coach.areas"
+      :rate="coach.rate"
+      ></coach-item>
     </ul>
     <h3 v-else>No coaches found.</h3>
   </section>
 </template>
 
 <script setup>
+import CoachItem from '@/components/layout/coaches/CoachItem.vue';
 import { useStore } from '@/stores/store.js';
 import { computed } from 'vue'
 
