@@ -19,7 +19,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const props = defineProps(['id', 'firstName', 'lastName', 'rate', 'areas'])
 
-const fullName = computed(() => props.firstName + '' + props.lastName);
+const fullName = computed(() => props.firstName + ' ' + props.lastName);
 const contactLink = computed(() => route.path + '/' + props.id + '/contact');
 const detailsLink = computed(() => route.path + '/' + props.id);
 </script>
