@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useStore = defineStore('store', {
   state: () => ({
+    userId: 'c3', // This is just for testing purposes
     coaches: [
       {
         id: 'c1',
@@ -25,13 +26,14 @@ export const useStore = defineStore('store', {
   getters: {
     allCoaches: state => state.coaches,
     hasCoaches: state => state.coaches && state.coaches.length > 0,
+    isCoach: state => coachId => state.coaches.some(coach => coach.id === coachId),
   },
 
   actions: {
     registerCoach(data) {
-      const id = this.coaches.length + 1
+      //const id = this.coaches.length + 1
       const newCoach = {
-        id: 'c' + id,
+        id: this.userId,//'c' + id,
         firstName: data.first,
         lastName: data.last,
         description: data.desc,
