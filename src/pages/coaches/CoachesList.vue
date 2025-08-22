@@ -54,7 +54,7 @@ const filteredCoaches = computed(() => {
 });
 
 const hasCoaches = computed(() => store.hasCoaches);
-const isCoach = computed(() => store.isCoach(store.userId));
+const isCoach = computed(() => store.isCoach);
 
 const setFilters = updatedFilters => {
   activeFilters.value = updatedFilters;
