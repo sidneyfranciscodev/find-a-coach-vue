@@ -1,5 +1,7 @@
 <template>
-  <section>FILTER</section>
+  <section>
+    <coach-filter @change-filter="setFilters" />
+  </section>
   <section>
     <base-card>
       <div class="controls">
@@ -21,13 +23,40 @@
 </template>
 
 <script setup>
-import CoachItem from '@/components/coaches/CoachItem.vue';
 import { useStore } from '@/stores/store.js';
-import { computed } from 'vue'
+import { computed, ref } from 'vue';
+
+import CoachItem from '@/components/coaches/CoachItem.vue';
+import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
 const store = useStore();
-const filteredCoaches = computed(() => store.allCoaches);
+
+const  activeFilters = ref({
+  frontend: true,
+  backend: true,
+  career: true,
+});
+
+const filteredCoaches = computed(() => {
+  const coaches = store.allCoaches;
+  return coaches.filter(coach => {
+    if (activeFilters.value.frontend && coach.areas.includes('frontend')) {
+      return true;
+    }
+    if (activeFilters.value.backend && coach.areas.includes('backend')) {
+      return true;
+    }
+    if (activeFilters.value.career && coach.areas.includes('career')) {
+      return true;
+    }
+    return false;
+  });
+});
 const hasCoaches = computed(() => store.hasCoaches);
+
+const setFilters = updatedFilters => {
+  activeFilters.value = updatedFilters;
+    }
 </script>
 
 <style lang="scss" scoped>

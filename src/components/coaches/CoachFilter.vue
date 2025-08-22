@@ -5,8 +5,8 @@
       <input type="checkbox" id="frontend" checked @change="setFilter" />
       <label for="frontend">Frontend</label>
       <input type="checkbox" id="backend" checked @change="setFilter" />
-      <label for="backtend">Backtend</label>
-      <input type="checkbox" id="career" checked />
+      <label for="backend">Backtend</label>
+      <input type="checkbox" id="career" checked @change="setFilter" />
       <label for="career">Career</label>
     </span>
   </base-card>
