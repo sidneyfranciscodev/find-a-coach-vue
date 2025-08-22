@@ -33,9 +33,11 @@ const route = useRoute();
 const props = defineProps(['id']);
 const selectedCoach = computed(() => store.allCoaches.find(coach => coach.id === props.id));
 
-const fullName = computed(() => selectedCoach.firstName + ' ' + selectedCoach.lastName);
+// Fix: use .value for selectedCoach in computed properties
+const fullName = computed(() => selectedCoach.value ? selectedCoach.value.firstName + ' ' + selectedCoach.value.lastName : '');
 const contactLnk = computed(() => route.path +  '/contact');
-const areas = computed(() => selectedCoach.areas);
-const description = computed(() => selectedCoach.description)
-const rate = computed(() => selectedCoach.hourlyRate)
+const areas = computed(() => selectedCoach.value ? selectedCoach.value.areas : []);
+const description = computed(() => selectedCoach.value ? selectedCoach.value.description : '')
+const rate = computed(() => selectedCoach.value ? selectedCoach.value.hourlyRate : '')
+
 </script>
