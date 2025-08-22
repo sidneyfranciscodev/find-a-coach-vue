@@ -6,7 +6,7 @@
     <base-card>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
-        <base-button link to="/register">Register as Coach</base-button>
+        <base-button v-if="!isCoach" link to="/register">Register as Coach</base-button>
       </div>
       <ul v-if="hasCoaches">
         <coach-item v-for="coach in filteredCoaches" :key="coach.id"
@@ -52,7 +52,9 @@ const filteredCoaches = computed(() => {
     return false;
   });
 });
+
 const hasCoaches = computed(() => store.hasCoaches);
+const isCoach = computed(() => store.isCoach(store.userId));
 
 const setFilters = updatedFilters => {
   activeFilters.value = updatedFilters;
