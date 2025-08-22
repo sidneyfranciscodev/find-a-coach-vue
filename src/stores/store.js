@@ -29,8 +29,9 @@ export const useStore = defineStore('store', {
 
   actions: {
     registerCoach(data) {
+      const id = this.coaches.length + 1
       const newCoach = {
-        id: new Date().toISOString(),
+        id: 'c' + id,
         firstName: data.first,
         lastName: data.last,
         description: data.desc,
