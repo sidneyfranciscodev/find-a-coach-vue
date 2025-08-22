@@ -27,5 +27,17 @@ export const useStore = defineStore('store', {
     hasCoaches: state => state.coaches && state.coaches.length > 0,
   },
 
-  actions: {},
+  actions: {
+    registerCoach(data) {
+      const newCoach = {
+        id: new Date().toISOString(),
+        firstName: data.first,
+        lastName: data.last,
+        description: data.desc,
+        hourlyRate: data.rate,
+        areas: data.areas
+      };
+      this.coaches.push(newCoach);
+    }
+  },
 });
