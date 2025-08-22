@@ -16,7 +16,13 @@
 </template>
 
 <script setup>
+import { useStore } from "@/stores/store";
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+const store = useStore();
+const route = useRoute();
+const router = useRouter();
 
 const email = ref("");
 const message = ref("");
@@ -29,11 +35,13 @@ const submitForm = () => {
     formIsValid.value = false;
     return;
   }
-
   const contactDetails = {
+    coachId: route.id,
     email: email.value,
     message: message.value,
   };
+  store.addRequest(contactDetails);
+  router.replace("/coaches");
 };
 </script>
 
