@@ -21,6 +21,7 @@ export const useStore = defineStore('store', {
         hourlyRate: 30,
       }
     ],
+    requests: [],
   }),
 
   getters: {
@@ -41,6 +42,16 @@ export const useStore = defineStore('store', {
         areas: data.areas
       };
       this.coaches.push(newCoach);
+    },
+
+    addRequest(requestData) {
+      const newRequest = {
+        id: new Date().toISOString(),
+        coachId: requestData.coachId,
+        userEmail: requestData.email,
+        message: requestData.message
+      };
+      this.requests.push(newRequest);
     }
   },
 });
