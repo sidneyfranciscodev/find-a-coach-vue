@@ -25,7 +25,6 @@ export const useStore = defineStore('store', {
   }),
 
   getters: {
-    allCoaches: state => state.coaches,
     hasCoaches: state => state.coaches && state.coaches.length > 0,
     isCoach: state => coachId => state.coaches.some(coach => coach.id === coachId),
     hasRequests: state => state.requests && state.requests.length > 0,

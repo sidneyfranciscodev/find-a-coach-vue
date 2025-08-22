@@ -38,7 +38,7 @@ const  activeFilters = ref({
 });
 
 const filteredCoaches = computed(() => {
-  const coaches = store.allCoaches;
+  const coaches = store.coaches;
   return coaches.filter(coach => {
     if (activeFilters.value.frontend && coach.areas.includes('frontend')) {
       return true;

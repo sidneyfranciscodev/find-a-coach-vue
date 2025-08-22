@@ -31,7 +31,7 @@ const store = useStore();
 const route = useRoute();
 
 const props = defineProps(['id']);
-const selectedCoach = computed(() => store.allCoaches.find(coach => coach.id === props.id));
+const selectedCoach = computed(() => store.coaches.find(coach => coach.id === props.id));
 
 const fullName = computed(() => selectedCoach.value ? selectedCoach.value.firstName + ' ' + selectedCoach.value.lastName : '');
 const contactLnk = computed(() => route.path +  '/contact');
