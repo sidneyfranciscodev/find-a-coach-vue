@@ -1,0 +1,45 @@
+<template>
+  <li>
+    <div>
+      <a :href="emailLink">{{ email }}</a>
+    </div>
+    <p>{{ message }}</p>
+  </li>
+</template>
+
+<script setup>
+import { computed } from 'vue';
+
+defineProps({
+  email: {
+    type: String,
+    required: true,
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+});
+
+const emailLink = computed(() => `mailto:${email}`);
+</script>
+
+<style scoped>
+li {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+a {
+  color: #3d008d;
+  font-weight: bold;
+  text-decoration: none;
+}
+a:hover,
+a:active {
+  color: #8d007a;
+}
+p {
+  margin: 0.5rem 0 0 0;
+}
+</style>
