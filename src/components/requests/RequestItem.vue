@@ -10,7 +10,7 @@
 <script setup>
 import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   email: {
     type: String,
     required: true,
@@ -21,7 +21,7 @@ defineProps({
   },
 });
 
-const emailLink = computed(() => `mailto:${email}`);
+const emailLink = computed(() => `mailto:${props.email}`);
 </script>
 
 <style scoped>
