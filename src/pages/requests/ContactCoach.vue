@@ -36,7 +36,7 @@ const submitForm = () => {
     return;
   }
   const contactDetails = {
-    coachId: route.id,
+    coachId: route.params.id,
     email: email.value,
     message: message.value,
   };
