@@ -20,7 +20,7 @@ import RequestItem from "@/components/requests/RequestItem.vue";
 
 const store = useStore();
 
-const userRequests = computed(() => store.requests);
+const userRequests = computed(() => store.userRequests);
 const hasRequests = computed(() => store.hasRequests);
 </script>
 
