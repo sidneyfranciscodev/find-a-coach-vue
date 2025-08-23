@@ -30,7 +30,9 @@ export const useStore = defineStore('store', {
     userRequests(state) {
       return state.requests.filter(req => req.coachId === state.userId)
     },
-    hasRequests: state => state.requests && state.requests.length > 0,
+    hasRequests() {
+      return this.userRequests && this.userRequests.length > 0
+    },
   },
 
   actions: {
