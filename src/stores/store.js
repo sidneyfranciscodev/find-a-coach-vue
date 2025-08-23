@@ -27,6 +27,9 @@ export const useStore = defineStore('store', {
   getters: {
     hasCoaches: state => state.coaches && state.coaches.length > 0,
     isCoach: state => state.coaches.some(coach => coach.id === state.userId),
+    userRequests(state) {
+      return state.requests.filter(req => req.coachId === state.userId)
+    },
     hasRequests: state => state.requests && state.requests.length > 0,
   },
 
