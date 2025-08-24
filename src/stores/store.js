@@ -4,6 +4,7 @@ import api from '@/api/axios';
 export const useStore = defineStore('store', {
   state: () => ({
     userId: 'c3', // This is just for testing purposes
+    error: null,
     coaches: [
       {
         id: 'c1',
@@ -51,8 +52,7 @@ export const useStore = defineStore('store', {
         const response = await api.put(`/coaches/${newCoach.id}.json`, newCoach);
         console.log(response.data);
       } catch (error) {
-        console.error('Error registering coach:', error);
-        return error;
+        this.error = 'Failed to register as a coach.';
       };
     },
 
@@ -87,9 +87,10 @@ export const useStore = defineStore('store', {
           }
         } else {
           throw new Error('Coach not found');
+          this.error = 'Coach not found.';
         }
       } catch (error) {
-        console.error('Error fetching user:', error);
+        this.error = 'Failed to load coaches.';
       }
     }
   },

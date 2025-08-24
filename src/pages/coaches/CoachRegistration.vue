@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!store.error" title="An error occurred!" @close="handleError">
+    <p>{{ store.error }}</p>
+  </base-dialog>
   <section>
     <base-card>
       <h2>Register as a coach now!</h2>
@@ -19,4 +22,6 @@ const saveData = (data) => {
   store.registerCoach(data);
   router.replace('/coaches');
 }
+
+const handleError = () => store.error = null;
 </script>

@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!store.error" title="An error occurred!" @close="handleError">
+    <p>{{ store.error }}</p>
+  </base-dialog>
   <section>
     <coach-filter @change-filter="setFilters" />
   </section>
@@ -34,7 +37,6 @@ import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
 const store = useStore();
 const isLoading = ref(false);
-const error = ref(null);
 
 const  activeFilters = ref({
   frontend: true,
@@ -65,15 +67,13 @@ const setFilters = updatedFilters => {
   activeFilters.value = updatedFilters;
 }
 
-const loadCoach = async () => {
+const loadCoach = () => {
   isLoading.value = true;
-  try {
-    await store.fetchCoach();
-  } catch (err) {
-    error.value = err.message || 'Failed to load coaches.';
-  }
+  store.fetchCoach();
   isLoading.value = false;
 }
+
+const handleError = () => store.error = null;
 </script>
 
 <style lang="scss" scoped>
