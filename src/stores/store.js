@@ -107,7 +107,6 @@ export const useStore = defineStore('store', {
       } catch(error) {
         this.error = 'Failed to send request.';
       }
-      this.requests.push(newRequest);
     },
 
     async fetchRequests() {
@@ -129,7 +128,7 @@ export const useStore = defineStore('store', {
           console.log(response.data);
         }
       } catch(error) {
-        this.error = 'Failed to fetch requests.';
+        this.error = 'Failed to fetch requests. refresh the page!';
       }
     }
   },
