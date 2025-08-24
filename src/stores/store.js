@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import api from '@/api/axios';
 
 export const useStore = defineStore('store', {
   state: () => ({
@@ -36,7 +37,7 @@ export const useStore = defineStore('store', {
   },
 
   actions: {
-    registerCoach(data) {
+    async registerCoach(data) {
       //const id = this.coaches.length + 1
       const newCoach = {
         id: this.userId,//'c' + id,
@@ -46,7 +47,13 @@ export const useStore = defineStore('store', {
         hourlyRate: data.rate,
         areas: data.areas
       };
-      this.coaches.push(newCoach);
+
+      try {
+        const response = await api.put(`/coaches/${newCoach.id}.json`, newCoach);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error registering coach:', error);
+      };
     },
 
     addRequest(requestData) {
