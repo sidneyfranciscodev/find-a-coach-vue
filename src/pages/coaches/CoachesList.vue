@@ -34,6 +34,7 @@ import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
 const store = useStore();
 const isLoading = ref(false);
+const error = ref(null);
 
 const  activeFilters = ref({
   frontend: true,
@@ -66,7 +67,11 @@ const setFilters = updatedFilters => {
 
 const loadCoach = async () => {
   isLoading.value = true;
-  await store.fetchCoach();
+  try {
+    await store.fetchCoach();
+  } catch (err) {
+    error.value = err.message || 'Failed to load coaches.';
+  }
   isLoading.value = false;
 }
 </script>
