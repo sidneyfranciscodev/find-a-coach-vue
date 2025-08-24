@@ -64,6 +64,31 @@ export const useStore = defineStore('store', {
         message: requestData.message
       };
       this.requests.push(newRequest);
+    },
+
+    async fetchCoach() {
+      try {
+        const response = await api.get(`/coaches/${this.userId}.json`);
+        if (response.data) {
+          const coachData = response.data;
+          const fetchedCoach = {
+            id: coachData.id,
+            firstName: coachData.firstName,
+            lastName: coachData.lastName,
+            description: coachData.description,
+            hourlyRate: coachData.hourlyRate,
+            areas: coachData.areas
+          };
+          const existingIndex = this.coaches.findIndex(coach => coach.id === this.userId);
+          if (existingIndex !== -1) {
+            this.coaches[existingIndex] = fetchedCoach;
+          } else {
+            this.coaches.push(fetchedCoach);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
     }
   },
 });
