@@ -60,16 +60,6 @@ export const useStore = defineStore('store', {
       };
     },
 
-    addRequest(requestData) {
-      const newRequest = {
-        id: new Date().toISOString(),
-        coachId: requestData.coachId,
-        userEmail: requestData.email,
-        message: requestData.message
-      };
-      this.requests.push(newRequest);
-    },
-
     async fetchCoach() {
       try {
         const response = await api.get(`/coaches/${this.userId}.json`);
@@ -95,6 +85,51 @@ export const useStore = defineStore('store', {
         }
       } catch (error) {
         this.error = 'Failed to load coaches.';
+      }
+    },
+
+    async addRequest(requestData) {
+      const newRequest = {
+        userEmail: requestData.email,
+        message: requestData.message
+      };
+      try {
+        const response = await api.post(`/requests/${requestData.coachId}.json`);
+        console.log(response);
+
+        if (response.data) {
+          newRequest.id = response.name;
+          newRequest.coachId = requestData.coachId;
+          console.log(response.data);
+        } else {
+          throw new Error(response.message || 'Failed to send request.')
+        }
+      } catch(error) {
+        this.error = 'Failed to send request.';
+      }
+      this.requests.push(newRequest);
+    },
+
+    async fetchRequests() {
+      const coachId = this.userId;
+
+      try {
+        const response = await axios.get(`/requests/${coachId}.json`);
+
+        if (response.data) {
+          for (const key in response.data) {
+            const request = {
+              id: key,
+              coachId: coachId,
+              email: response.data[key].userEmail,
+              message: response.data[key].message 
+            };
+            this.requests.push(request);
+          }
+          console.log(response.data);
+        }
+      } catch(error) {
+        this.error = 'Failed to fetch requests.';
       }
     }
   },
