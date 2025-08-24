@@ -8,10 +8,10 @@
         <base-button mode="outline" @click="loadCoach">Refresh</base-button>
         <base-button v-if="!isCoach" link to="/register">Register as Coach</base-button>
       </div>
-      <div>
-        <base-spinner v-if="isLoading"></base-spinner>>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>>
       </div>
-      <ul v-if="hasCoaches">
+      <ul v-else-if="hasCoaches">
         <coach-item v-for="coach in filteredCoaches" :key="coach.id"
         :id="coach.id"
         :first-name="coach.firstName"
