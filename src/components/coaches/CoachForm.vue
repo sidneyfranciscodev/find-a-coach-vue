@@ -113,9 +113,9 @@ const submitForm = () => {
     return
   }
   const formData = {
-    first: firstName.value,
-    last: lastName.value,
-    desc: description.value,
+    firstName: firstName.value,
+    lastName: lastName.value,
+    description: description.value,
     rate: rate.value,
     areas: areas.value,
   }

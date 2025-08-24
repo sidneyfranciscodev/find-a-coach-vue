@@ -38,12 +38,11 @@ export const useStore = defineStore('store', {
 
   actions: {
     async registerCoach(data) {
-      //const id = this.coaches.length + 1
       const newCoach = {
-        id: this.userId,//'c' + id,
-        firstName: data.first,
-        lastName: data.last,
-        description: data.desc,
+        id: this.userId,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        description: data.description,
         hourlyRate: data.rate,
         areas: data.areas
       };
@@ -53,6 +52,7 @@ export const useStore = defineStore('store', {
         console.log(response.data);
       } catch (error) {
         console.error('Error registering coach:', error);
+        return error;
       };
     },
 
@@ -85,6 +85,8 @@ export const useStore = defineStore('store', {
           } else {
             this.coaches.push(fetchedCoach);
           }
+        } else {
+          throw new Error('Coach not found');
         }
       } catch (error) {
         console.error('Error fetching user:', error);
