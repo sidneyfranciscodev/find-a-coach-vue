@@ -30,6 +30,7 @@ import CoachItem from '@/components/coaches/CoachItem.vue';
 import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
 const store = useStore();
+const isLoading = ref(false);
 
 const  activeFilters = ref({
   frontend: true,
@@ -60,8 +61,10 @@ const setFilters = updatedFilters => {
   activeFilters.value = updatedFilters;
 }
 
-const loadCoach = () => {
-  store.fetchCoach();
+const loadCoach = async () => {
+  isLoading.value = true;
+  await store.fetchCoach();
+  isLoading.value = false;
 }
 </script>
 
