@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
+import { useRouter } from 'vue-router';
 import api from '@/api/axios';
+
+const router = useRouter();
 
 export const useStore = defineStore('store', {
   state: () => ({
@@ -50,6 +53,7 @@ export const useStore = defineStore('store', {
 
       try {
         const response = await api.put(`/coaches/${newCoach.id}.json`, newCoach);
+        router.replace('/coaches');
         console.log(response.data);
       } catch (error) {
         this.error = 'Failed to register as a coach.';
