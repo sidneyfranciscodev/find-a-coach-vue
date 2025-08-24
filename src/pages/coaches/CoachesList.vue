@@ -5,7 +5,7 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline">Refresh</base-button>
+        <base-button mode="outline" @click="loadCoach">Refresh</base-button>
         <base-button v-if="!isCoach" link to="/register">Register as Coach</base-button>
       </div>
       <ul v-if="hasCoaches">
@@ -58,7 +58,11 @@ const isCoach = computed(() => store.isCoach);
 
 const setFilters = updatedFilters => {
   activeFilters.value = updatedFilters;
-    }
+}
+
+const loadCoach = () => {
+  store.fetchCoach();
+}
 </script>
 
 <style lang="scss" scoped>
