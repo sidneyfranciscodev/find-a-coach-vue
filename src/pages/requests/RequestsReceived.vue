@@ -36,7 +36,7 @@ const loadRequests = () => {
   isLoading.value = true;
 }
 
-loadRequests();
+//loadRequests();
 
 const handleError = () => store.error = null;
 </script>
