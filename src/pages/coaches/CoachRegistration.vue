@@ -13,11 +13,14 @@
 <script setup>
 import CoachForm from '@/components/coaches/CoachForm.vue';
 import { useStore } from '@/stores/store';
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
 
 const saveData = (data) => {
   store.registerCoach(data);
+  router.replace("/coaches");
 }
 
 const handleError = () => store.error = null;
