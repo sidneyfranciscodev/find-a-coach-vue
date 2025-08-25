@@ -84,18 +84,17 @@ export const useStore = defineStore('store', {
       }
     },
 
-    async addRequest(requestData) {
+    async addRequest(payload) {
       const newRequest = {
-        userEmail: requestData.email,
-        message: requestData.message
+        userEmail: payload.email,
+        message: payload.message
       };
       try {
-        const response = await api.post(`/requests/${requestData.coachId}.json`);
-        console.log(response);
+        const response = await api.post(`/requests/${payload.coachId}.json`, newRequest);
 
         if (response.data) {
           newRequest.id = response.name;
-          newRequest.coachId = requestData.coachId;
+          newRequest.coachId = payload.coachId;
           console.log(response.data);
         } else {
           throw new Error(response.message || 'Failed to send request.')
