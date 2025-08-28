@@ -1,23 +1,25 @@
 <template>
-  <base-dialog :show="!!store.error" title="An error occurred!" @close="handleError">
-    <p>{{ store.error }}</p>
-  </base-dialog>
-  <section>
-    <base-card>
-      <header>
-        <h2>Requests Received</h2>
-        <base-button mode="outline" @click="loadRequests">Refresh</base-button>
-      </header>
-      <div v-if="store.isLoading">
-        <base-spinner></base-spinner>
-      </div>
-      <ul v-else-if="hasRequests && !store.isLoading">
-        <request-item v-for="req in userRequests" :key="req.id" :email="req.email" :message="req.message">
-        </request-item>
-      </ul>
-      <h3 v-else>You haven't received any requests yet</h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog :show="!!store.error" title="An error occurred!" @close="handleError">
+      <p>{{ store.error }}</p>
+    </base-dialog>
+    <section>
+      <base-card>
+        <header>
+          <h2>Requests Received</h2>
+          <base-button mode="outline" @click="loadRequests">Refresh</base-button>
+        </header>
+        <div v-if="store.isLoading">
+          <base-spinner></base-spinner>
+        </div>
+        <ul v-else-if="hasRequests && !store.isLoading">
+          <request-item v-for="req in userRequests" :key="req.id" :email="req.email" :message="req.message">
+          </request-item>
+        </ul>
+        <h3 v-else>You haven't received any requests yet</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script setup>
