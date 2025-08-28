@@ -4,6 +4,7 @@ import api from '@/api/axios';
 export const useStore = defineStore('store', {
   state: () => ({
     userId: 'c3', // This is just for testing purposes
+    lastFetch: null,
     error: null,
     coaches: [
       {
@@ -34,6 +35,13 @@ export const useStore = defineStore('store', {
     },
     hasRequests() {
       return this.userRequests && this.userRequests.length > 0
+    },
+    shouldUpdate(state) {
+      if (!state.lastFetch) {
+        return true;
+      }
+      const currentTimeStamp = new Date().getTime();
+      return (currentTimeStamp - state.lastFetch) / 1000 > 60;
     },
   },
 
@@ -74,6 +82,7 @@ export const useStore = defineStore('store', {
             this.coaches[existingIndex] = fetchedCoach;
           } else {
             this.coaches.push(fetchedCoach);
+            this.setFetchTimeStamp();
           }
         } else {
           throw new Error('Coach not found');
@@ -129,6 +138,10 @@ export const useStore = defineStore('store', {
         console.log(error)
         this.error = 'Failed to fetch requests. refresh the page!';
       }
+    },
+
+    setFetchTimeStamp() {
+      this.lastFetch = new Date().getTime();
     }
   },
 });
