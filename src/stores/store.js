@@ -92,12 +92,13 @@ export const useStore = defineStore('store', {
       try {
         const response = await api.post(`/requests/${payload.coachId}.json`, newRequest);
 
-        if (!response.ok) {
-          throw new Error(response.message || 'Failed to send request.')
-        } else {
+        if (response.data) {
           newRequest.id = response.name;
           newRequest.coachId = payload.coachId;
+          console.log('[request sent]')
           console.log(response.data);
+        } else {
+          throw new Error(response.message || 'Failed to send request.')
         }
       } catch(error) {
         this.error = 'Failed to send request.';
