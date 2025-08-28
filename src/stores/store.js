@@ -133,6 +133,7 @@ export const useStore = defineStore('store', {
         const response = await api.get(`/requests/${coachId}.json`);
 
         if (response.data) {
+          this.requests = [];
           for (const key in response.data) {
             const request = {
               id: key,
