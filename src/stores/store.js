@@ -5,7 +5,6 @@ export const useStore = defineStore('store', {
   state: () => ({
     userId: 'c3', // This is just for testing purposes
     error: null,
-    success: false,
     coaches: [
       {
         id: 'c1',
@@ -51,7 +50,6 @@ export const useStore = defineStore('store', {
 
       try {
         const response = await api.put(`/coaches/${newCoach.id}.json`, newCoach);
-        this.success = true;
         console.log(response.data);
       } catch (error) {
         this.error = 'Failed to register as a coach.';
@@ -97,13 +95,14 @@ export const useStore = defineStore('store', {
         if (response.data) {
           newRequest.id = response.name;
           newRequest.coachId = payload.coachId;
-          this.success = true;
+          console.log(this.success)
           console.log('[request sent]')
           console.log(response.data);
         } else {
           throw new Error(response.message || 'Failed to send request.')
         }
       } catch(error) {
+        console.log(error)
         this.error = 'Failed to send request.';
       };
     },

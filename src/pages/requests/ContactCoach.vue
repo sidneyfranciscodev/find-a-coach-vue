@@ -41,9 +41,8 @@ const submitForm = () => {
     message: message.value,
   };
   store.addRequest(contactDetails);
-  if (store.success) {
+  if (store.error === null) {
     router.replace("/coaches");
-    store.success = false;
   }
 };
 </script>
