@@ -12,7 +12,7 @@
         <base-spinner></base-spinner>>
       </div>
       <ul v-else-if="hasRequests && !isLoading">
-        <request-item v-for="req in userRequests" :key="req.id" :email="req.userEmail" :message="req.message">
+        <request-item v-for="req in userRequests" :key="req.id" :email="req.email" :message="req.message">
         </request-item>
       </ul>
       <h3 v-else>You haven't received any requests yet</h3>

@@ -56,7 +56,6 @@ export const useStore = defineStore('store', {
       } catch (error) {
         this.error = 'Failed to register as a coach.';
       };
-      this.success = false;
     },
 
     async fetchCoach() {
@@ -107,7 +106,6 @@ export const useStore = defineStore('store', {
       } catch(error) {
         this.error = 'Failed to send request.';
       };
-      this.success = false;
     },
 
     async fetchRequests() {
@@ -117,7 +115,7 @@ export const useStore = defineStore('store', {
         const response = await api.get(`/requests/${coachId}.json`);
 
         if (response.data) {
-          /* for (const key in response.data) {
+          for (const key in response.data) {
             const request = {
               id: key,
               coachId: coachId,
@@ -125,7 +123,7 @@ export const useStore = defineStore('store', {
               message: response.data[key].message
             };
             this.requests.push(request);
-          } */
+          }
           console.log(response.data);
         }
       } catch(error) {
