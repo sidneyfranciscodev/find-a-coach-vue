@@ -67,6 +67,12 @@ export const useStore = defineStore('store', {
 
     async fetchCoach() {
       this.isLoading = true;
+
+      if (!this.shouldUpdate && this.coaches.length > 0) {
+        this.isLoading = false;
+        return;
+      }
+
       try {
         const response = await api.get(`/coaches/${this.userId}.json`);
         if (response.data) {
