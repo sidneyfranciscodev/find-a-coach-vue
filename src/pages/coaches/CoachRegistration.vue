@@ -20,7 +20,10 @@ const router = useRouter();
 
 const saveData = (data) => {
   store.registerCoach(data);
-  router.replace("/coaches");
+  if (store.success) {
+    router.replace("/coaches");
+    store.success = false;
+  }
 }
 
 const handleError = () => store.error = null;
