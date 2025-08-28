@@ -5,7 +5,7 @@ export const useStore = defineStore('store', {
   state: () => ({
     userId: 'c3', // This is just for testing purposes
     error: null,
-    success: null,
+    success: false,
     coaches: [
       {
         id: 'c1',
@@ -56,7 +56,7 @@ export const useStore = defineStore('store', {
       } catch (error) {
         this.error = 'Failed to register as a coach.';
       };
-      this.success = null;
+      this.success = false;
     },
 
     async fetchCoach() {
@@ -107,7 +107,7 @@ export const useStore = defineStore('store', {
       } catch(error) {
         this.error = 'Failed to send request.';
       };
-      this.success = null;
+      this.success = false;
     },
 
     async fetchRequests() {
