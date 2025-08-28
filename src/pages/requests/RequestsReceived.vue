@@ -6,6 +6,7 @@
     <base-card>
       <header>
         <h2>Requests Received</h2>
+        <base-button mode="outline" @click="loadRequests">Refresh</base-button>
       </header>
       <div v-if="isLoading">
         <base-spinner></base-spinner>>
@@ -35,8 +36,6 @@ const loadRequests = () => {
   store.fetchRequests();
   isLoading.value = true;
 }
-
-//loadRequests();
 
 const handleError = () => store.error = null;
 </script>
