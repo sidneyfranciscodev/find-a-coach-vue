@@ -11,7 +11,7 @@
         <base-button mode="outline" @click="loadCoach">Refresh</base-button>
         <base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
       </div>
-      <div v-if="isLoading">
+      <div v-if="store.isLoading">
         <base-spinner></base-spinner>
       </div>
       <ul v-else-if="hasCoaches">
@@ -36,7 +36,6 @@ import CoachItem from '@/components/coaches/CoachItem.vue';
 import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
 const store = useStore();
-const isLoading = ref(false);
 
 const  activeFilters = ref({
   frontend: true,
@@ -68,9 +67,7 @@ const setFilters = updatedFilters => {
 }
 
 const loadCoach = () => {
-  isLoading.value = true;
   store.fetchCoach();
-  isLoading.value = false;
 }
 
 const handleError = () => store.error = null;

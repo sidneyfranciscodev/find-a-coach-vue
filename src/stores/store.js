@@ -4,6 +4,7 @@ import api from '@/api/axios';
 export const useStore = defineStore('store', {
   state: () => ({
     userId: 'c3', // This is just for testing purposes
+    isLoading : false,
     lastFetch: null,
     error: null,
     coaches: [
@@ -65,6 +66,7 @@ export const useStore = defineStore('store', {
     },
 
     async fetchCoach() {
+      this.isLoading = true;
       try {
         const response = await api.get(`/coaches/${this.userId}.json`);
         if (response.data) {
@@ -91,6 +93,7 @@ export const useStore = defineStore('store', {
       } catch (error) {
         this.error = 'Failed to load coaches.';
       }
+      this.isLoading = false;
     },
 
     async addRequest(payload) {
@@ -117,6 +120,7 @@ export const useStore = defineStore('store', {
     },
 
     async fetchRequests() {
+      this.isLoading = true;
       const coachId = this.userId;
 
       try {
@@ -138,6 +142,7 @@ export const useStore = defineStore('store', {
         console.log(error)
         this.error = 'Failed to fetch requests. refresh the page!';
       }
+      this.isLoading = false;
     },
 
     setFetchTimeStamp() {

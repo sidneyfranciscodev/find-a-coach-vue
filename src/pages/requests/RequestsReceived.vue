@@ -8,7 +8,7 @@
         <h2>Requests Received</h2>
         <base-button mode="outline" @click="loadRequests">Refresh</base-button>
       </header>
-      <div v-if="isLoading">
+      <div v-if="store.isLoading">
         <base-spinner></base-spinner>
       </div>
       <ul v-else-if="hasRequests && !isLoading">
@@ -26,15 +26,12 @@ import { computed, ref } from "vue";
 import RequestItem from "@/components/requests/RequestItem.vue";
 
 const store = useStore();
-const isLoading = ref(false)
 
 const userRequests = computed(() => store.userRequests);
 const hasRequests = computed(() => store.hasRequests);
 
 const loadRequests = () => {
-  isLoading.value = true;
   store.fetchRequests();
-  isLoading.value = false;
 }
 
 const handleError = () => store.error = null;
