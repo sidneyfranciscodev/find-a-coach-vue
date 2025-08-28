@@ -114,10 +114,10 @@ export const useStore = defineStore('store', {
       const coachId = this.userId;
 
       try {
-        const response = await axios.get(`/requests/${coachId}.json`);
+        const response = await api.get(`/requests/${coachId}.json`);
 
         if (response.data) {
-          for (const key in response.data) {
+          /* for (const key in response.data) {
             const request = {
               id: key,
               coachId: coachId,
@@ -125,10 +125,11 @@ export const useStore = defineStore('store', {
               message: response.data[key].message
             };
             this.requests.push(request);
-          }
+          } */
           console.log(response.data);
         }
       } catch(error) {
+        console.log(error)
         this.error = 'Failed to fetch requests. refresh the page!';
       }
     }
