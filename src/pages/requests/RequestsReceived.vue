@@ -9,7 +9,7 @@
         <base-button mode="outline" @click="loadRequests">Refresh</base-button>
       </header>
       <div v-if="isLoading">
-        <base-spinner></base-spinner>>
+        <base-spinner></base-spinner>
       </div>
       <ul v-else-if="hasRequests && !isLoading">
         <request-item v-for="req in userRequests" :key="req.id" :email="req.email" :message="req.message">

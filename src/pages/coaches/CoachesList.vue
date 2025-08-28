@@ -12,7 +12,7 @@
         <base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
       </div>
       <div v-if="isLoading">
-        <base-spinner></base-spinner>>
+        <base-spinner></base-spinner>
       </div>
       <ul v-else-if="hasCoaches">
         <coach-item v-for="coach in filteredCoaches" :key="coach.id"
