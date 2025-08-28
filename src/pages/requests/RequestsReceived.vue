@@ -34,7 +34,7 @@ const hasRequests = computed(() => store.hasRequests);
 const loadRequests = () => {
   isLoading.value = true;
   store.fetchRequests();
-  isLoading.value = true;
+  isLoading.value = false;
 }
 
 const handleError = () => store.error = null;
