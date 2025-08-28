@@ -11,7 +11,7 @@
       <div v-if="store.isLoading">
         <base-spinner></base-spinner>
       </div>
-      <ul v-else-if="hasRequests && !isLoading">
+      <ul v-else-if="hasRequests && !store.isLoading">
         <request-item v-for="req in userRequests" :key="req.id" :email="req.email" :message="req.message">
         </request-item>
       </ul>
