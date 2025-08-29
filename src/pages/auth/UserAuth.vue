@@ -7,7 +7,7 @@
       <base-spinner></base-spinner>
     </base-dialog>
     <base-card>
-      <form @submit.prevent="handleLogin">
+      <form @submit.prevent="handleSubmit">
         <div class="form-control">
           <label for="email">E-Mail</label>
           <input type="email" id="email" v-model.trim="email" />
@@ -35,7 +35,7 @@ const password = ref('');
 const formIsValid = ref(true);
 const mode = ref('login')
 
-const handleLogin = () => {
+const handleSubmit = () => {
     formIsValid.value = true;
 
     if (email.value == '' || !email.value.includes('@') || password.value.length < 6 ) {
