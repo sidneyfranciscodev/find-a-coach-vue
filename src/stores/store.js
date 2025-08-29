@@ -36,9 +36,6 @@ export const useStore = defineStore('store', {
   getters: {
     hasCoaches: state => state.coaches && state.coaches.length > 0,
     isCoach: state => state.coaches.some(coach => coach.id === state.userId),
-    newCoachId(state) {
-      return 'c' + this.coaches.length + 1;
-    },
     userRequests(state) {
       return state.requests.filter(req => req.coachId === state.userId)
     },
@@ -52,13 +49,15 @@ export const useStore = defineStore('store', {
       const currentTimeStamp = new Date().getTime();
       return (currentTimeStamp - state.lastFetch) / 1000 > 60;
     },
+    isLoggedIn(state) {
+      return !!state.token;
+    },
   },
 
   actions: {
     async registerCoach(data) {
-      const newId = this.newCoachId;
       const newCoach = {
-        id: newId,
+        id: this.userId,
         firstName: data.firstName,
         lastName: data.lastName,
         description: data.description,
