@@ -105,13 +105,13 @@ export const useStore = defineStore('store', {
           }
         } else {
           throw new Error('Coach not found');
-          this.error = 'Coach not found.';
         }
       } catch (error) {
         this.error = 'Failed to load coaches.';
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
-      this.isLoading = false;
     },
 
     async addRequest(payload) {
@@ -160,8 +160,9 @@ export const useStore = defineStore('store', {
       } catch(error) {
         this.error = 'Failed to fetch requests. refresh the page!';
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
-      this.isLoading = false;
     },
 
     setFetchTimeStamp() {
@@ -169,6 +170,7 @@ export const useStore = defineStore('store', {
     },
 
     async login(payload) {
+      this.isLoading = true;
       try {
         const response = await api.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, {
           email: payload.email,
@@ -187,10 +189,13 @@ export const useStore = defineStore('store', {
       } catch (error) {
         this.error = 'Failed to login.';
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
     },
 
     async signup(payload) {
+      this.isLoading = true;
       try {
         const response = await api.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`, {
           email: payload.email,
@@ -206,6 +211,8 @@ export const useStore = defineStore('store', {
       } catch (error) {
         this.error = 'Failed to login.';
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
     },
   },
