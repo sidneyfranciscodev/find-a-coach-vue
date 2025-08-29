@@ -28,7 +28,7 @@ const email = ref("");
 const message = ref("");
 const formIsValid = ref(true);
 
-const submitForm = () => {
+const submitForm = async () => {
   formIsValid.value = true;
 
   if (email.value === "" || !email.value.includes("@") || message.value === "") {
@@ -40,9 +40,10 @@ const submitForm = () => {
     email: email.value,
     message: message.value,
   };
-  store.addRequest(contactDetails);
-  if (store.error === null) {
+  await store.addRequest(contactDetails);
+  if (store.check) {
     router.replace("/coaches");
+    store.check = false;
   }
 };
 </script>

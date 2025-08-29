@@ -3,10 +3,11 @@ import api from '@/api/axios';
 
 export const useStore = defineStore('store', {
   state: () => ({
-    userId: 'c3', // This is just for testing purposes
+    userId: null,
     isLoading : false,
     lastFetch: null,
     error: null,
+    check: false,
     coaches: [
       {
         id: 'c1',
@@ -23,7 +24,7 @@ export const useStore = defineStore('store', {
         areas: ['frontend', 'career'],
         description: "I'm Julie I am a senior developer in a big company.",
         hourlyRate: 30,
-      }
+      },
     ],
     requests: [],
   }),
@@ -31,6 +32,9 @@ export const useStore = defineStore('store', {
   getters: {
     hasCoaches: state => state.coaches && state.coaches.length > 0,
     isCoach: state => state.coaches.some(coach => coach.id === state.userId),
+    newCoachId(state) {
+      return 'c' + this.coaches.length + 1;
+    },
     userRequests(state) {
       return state.requests.filter(req => req.coachId === state.userId)
     },
@@ -48,8 +52,9 @@ export const useStore = defineStore('store', {
 
   actions: {
     async registerCoach(data) {
+      const newId = this.newCoachId;
       const newCoach = {
-        id: this.userId,
+        id: newId,
         firstName: data.firstName,
         lastName: data.lastName,
         description: data.description,
@@ -59,9 +64,11 @@ export const useStore = defineStore('store', {
 
       try {
         const response = await api.put(`/coaches/${newCoach.id}.json`, newCoach);
+        this.check = true;
         console.log(response.data);
-      } catch (error) {
+      } catch (error) {    
         this.error = 'Failed to register as a coach.';
+        console.log(error);
       };
     },
 
@@ -98,6 +105,7 @@ export const useStore = defineStore('store', {
         }
       } catch (error) {
         this.error = 'Failed to load coaches.';
+        console.log(error);
       }
       this.isLoading = false;
     },
@@ -111,17 +119,17 @@ export const useStore = defineStore('store', {
         const response = await api.post(`/requests/${payload.coachId}.json`, newRequest);
 
         if (response.data) {
+          this.check = true,
           newRequest.id = response.name;
           newRequest.coachId = payload.coachId;
-          console.log(this.success)
           console.log('[request sent]')
           console.log(response.data);
         } else {
           throw new Error(response.message || 'Failed to send request.')
         }
       } catch(error) {
-        console.log(error)
         this.error = 'Failed to send request.';
+        console.log(error);
       };
     },
 
@@ -146,8 +154,8 @@ export const useStore = defineStore('store', {
           console.log(response.data);
         }
       } catch(error) {
-        console.log(error)
         this.error = 'Failed to fetch requests. refresh the page!';
+        console.log(error);
       }
       this.isLoading = false;
     },
