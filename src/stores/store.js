@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia';
 import api from '@/api/axios';
 
+const API_KEY = 'AIzaSyAyONm-cWUKyKsfYXlj41Dl45aXzeGq_GY';
+
 export const useStore = defineStore('store', {
   state: () => ({
     userId: null,
+    token: null,
+    tokenExpire: null,
     isLoading : false,
     lastFetch: null,
     error: null,
@@ -66,7 +70,7 @@ export const useStore = defineStore('store', {
         const response = await api.put(`/coaches/${newCoach.id}.json`, newCoach);
         this.check = true;
         console.log(response.data);
-      } catch (error) {    
+      } catch (error) {
         this.error = 'Failed to register as a coach.';
         console.log(error);
       };
@@ -162,6 +166,47 @@ export const useStore = defineStore('store', {
 
     setFetchTimeStamp() {
       this.lastFetch = new Date().getTime();
-    }
+    },
+
+    async login(payload) {
+      try {
+        const response = await api.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, {
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true
+        });
+        if (response.data) {
+          this.userId = response.data.localId;
+          this.token = response.data.idToken;
+          this.tokenExpire = response.data.expiresIn;
+          this.check = true;
+          console.log(response.data);
+        } else {
+          throw new Error(response.message || 'Failed to login.')
+        }
+      } catch (error) {
+        this.error = 'Failed to login.';
+        console.log(error);
+      }
+    },
+
+    async signup(payload) {
+      try {
+        const response = await api.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`, {
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true
+        });
+        if (response.data) {
+          this.check = true;
+          console.log(response.data);
+        } else {
+          throw new Error(response.message || 'Failed to login.');
+        }
+      } catch (error) {
+        this.error = 'Failed to login.';
+        console.log(error);
+      }
+    },
   },
 });

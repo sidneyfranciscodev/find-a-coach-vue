@@ -31,11 +31,17 @@ const handleLogin = () => {
         formIsValid.value = false;
         return;
     }
-    const user = {
-        email: email.value,
-        password: password.value,
-    };
-    // send http request...
+    if (mode.value === 'login') {
+        store.login({
+            email: email.value,
+            password: password.value,
+        });
+    } else {
+        store.signup({
+            email: email.value,
+            password: password.value,
+        });
+    }
 };
 
 const switchAuthMode = () => {
