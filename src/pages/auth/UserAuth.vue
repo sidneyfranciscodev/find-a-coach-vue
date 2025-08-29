@@ -26,33 +26,39 @@
 
 <script setup>
 import { useStore } from '@/stores/store';
+import { useRouter } from 'vue-router';
 import { computed, ref } from 'vue';
 
 const store = useStore();
+const router = useRouter();
 
 const email = ref('');
 const password = ref('');
 const formIsValid = ref(true);
 const mode = ref('login')
 
-const handleSubmit = () => {
-    formIsValid.value = true;
+const handleSubmit = async () => {
+  formIsValid.value = true;
 
-    if (email.value == '' || !email.value.includes('@') || password.value.length < 6 ) {
-        formIsValid.value = false;
-        return;
-    }
-    if (mode.value === 'login') {
-        store.login({
-            email: email.value,
-            password: password.value,
-        });
-    } else {
-        store.signup({
-            email: email.value,
-            password: password.value,
-        });
-    }
+  if (email.value == '' || !email.value.includes('@') || password.value.length < 6 ) {
+    formIsValid.value = false;
+    return;
+  }
+  if (mode.value === 'login') {
+    await store.login({
+      email: email.value,
+      password: password.value,
+    });
+  } else {
+    await store.signup({
+      email: email.value,
+      password: password.value,
+    });
+  }
+  if (store.check) {
+    router.replace("/coaches");
+    store.check = false;
+  }
 };
 
 const handleError = () => {

@@ -67,7 +67,7 @@ export const useStore = defineStore('store', {
       };
 
       try {
-        const response = await api.put(`/coaches/${newCoach.id}.json`, newCoach);
+        const response = await api.put(`/coaches/${newCoach.id}.json?auth=${this.token}`, newCoach);
         this.check = true;
         console.log(response.data);
       } catch (error) {
@@ -142,7 +142,7 @@ export const useStore = defineStore('store', {
       const coachId = this.userId;
 
       try {
-        const response = await api.get(`/requests/${coachId}.json`);
+        const response = await api.get(`/requests/${coachId}.json?auth=${this.token}`);
 
         if (response.data) {
           this.requests = [];
