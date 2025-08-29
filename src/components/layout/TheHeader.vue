@@ -16,6 +16,9 @@ const store = useStore();
         <li v-else>
           <router-link to="/auth">Login</router-link>
         </li>
+        <li v-if="store.isLoggedIn">
+          <base-button @click="store.logout">Logout</base-button>
+        </li>
       </ul>
     </nav>
   </header>

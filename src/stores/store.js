@@ -214,5 +214,11 @@ export const useStore = defineStore('store', {
         this.isLoading = false;
       }
     },
+
+    logout() {
+      this.userId = null;
+      this.token = null;
+      this.tokenExpire = null;
+    }
   },
 });
