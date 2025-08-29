@@ -1,10 +1,21 @@
+<script setup lang="ts">
+import { useStore } from '@/stores/store';
+
+const store = useStore();
+</script>
+
 <template>
   <header>
     <nav>
       <h1><router-link to="/">Find a Coach</router-link></h1>
       <ul>
         <li><router-link to="/coaches">All Coaches</router-link></li>
-        <li><router-link to="/requests">Requests</router-link></li>
+        <li v-if="store.isLoggedIn">
+          <router-link to="/requests">Requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
+        </li>
       </ul>
     </nav>
   </header>
