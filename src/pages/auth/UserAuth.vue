@@ -17,7 +17,10 @@
 </template>
 
 <script setup>
+import { useStore } from '@/stores/store';
 import { computed, ref } from 'vue';
+
+const store = useStore();
 
 const email = ref('');
 const password = ref('');
@@ -27,7 +30,7 @@ const mode = ref('login')
 const handleLogin = () => {
     formIsValid.value = true;
 
-    if (email.value == '' || !email.includes('@') || password.length < 6 ) {
+    if (email.value == '' || !email.value.includes('@') || password.value.length < 6 ) {
         formIsValid.value = false;
         return;
     }
