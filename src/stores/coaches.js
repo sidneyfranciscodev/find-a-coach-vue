@@ -44,15 +44,15 @@ export const useCoachesStore = defineStore('coaches', {
   },
 
   actions: {
-    async registerCoach(data) {
+    async registerCoach(payload) {
       const authStore = useAuthStore();
       const newCoach = {
-        id: this.userId,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        description: data.description,
-        hourlyRate: data.rate,
-        areas: data.areas
+        id: authStore.userId,
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        description: payload.description,
+        hourlyRate: payload.rate,
+        areas: payload.areas
       };
 
       try {
@@ -65,7 +65,7 @@ export const useCoachesStore = defineStore('coaches', {
       };
     },
 
-    async fetchCoach() {
+    async fetchCoaches() {
       const authStore = useAuthStore();
       this.isLoading = true;
 
@@ -75,28 +75,28 @@ export const useCoachesStore = defineStore('coaches', {
       }
 
       try {
-        const response = await api.get(`/coaches/${authStore.userId}.json`);
+        const response = await api.get(`/coaches.json`);
         if (response.data) {
-          const coachData = response.data;
-          const fetchedCoach = {
-            id: coachData.id,
-            firstName: coachData.firstName,
-            lastName: coachData.lastName,
-            description: coachData.description,
-            hourlyRate: coachData.hourlyRate,
-            areas: coachData.areas
-          };
+          const coachesData = response.data;
           console.log(response.data);
-          // Update existing coach or add new one
-          const existingIndex = this.coaches.findIndex(coach => coach.id === authStore.userId);
-          if (existingIndex !== -1) {
-            this.coaches[existingIndex] = fetchedCoach;
-          } else {
-            this.coaches.push(fetchedCoach);
-            this.setFetchTimeStamp();
+          for (const key in coachesData) {
+            const coach = {
+              id: key,
+              firstName: coachesData[key].firstName,
+              lastName: coachesData[key].lastName,
+              description: coachesData[key].description,
+              hourlyRate: coachesData[key].hourlyRate,
+              areas: coachesData[key].areas
+            };
+            const existingCoachIndex = this.coaches.findIndex(c => c.id === key);
+            if (existingCoachIndex !== -1) {
+              this.coaches[existingCoachIndex] = coach;
+            } else {
+              this.coaches.push(coach);
+            }
           }
         } else {
-          throw new Error('Coach not found');
+          throw new Error('Coaches not found');
         }
       } catch (error) {
         this.error = 'Failed to load coaches.';

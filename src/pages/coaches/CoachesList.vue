@@ -9,7 +9,7 @@
     <section>
       <base-card>
         <div class="controls">
-          <base-button mode="outline" @click="loadCoach">Refresh</base-button>
+          <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
           <base-button v-if="!authStore.isLoggedIn" to="/auth" link>Login</base-button>
           <base-button v-if="authStore.isLoggedIn && !isCoach && !coachesStore.isLoading" link to="/register">Register as Coach</base-button>
         </div>
@@ -71,11 +71,11 @@ const setFilters = updatedFilters => {
   activeFilters.value = updatedFilters;
 }
 
-const loadCoach = () => {
-  coachesStore.fetchCoach();
+const loadCoaches = () => {
+  coachesStore.fetchCoaches();
 }
 
-coachesStore.fetchCoach();
+//coachesStore.fetchCoaches();
 
 const handleError = () => coachesStore.error = null;
 </script>
