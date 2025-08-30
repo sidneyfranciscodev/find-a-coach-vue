@@ -66,7 +66,7 @@ export const useStore = defineStore('store', {
       };
 
       try {
-        const response = await api.put(`/coaches/${newCoach.id}.json?auth=${this.token}`, newCoach);
+        const response = await api.post(`/coaches/${newCoach.id}.json?auth=${this.token}`, newCoach);
         this.check = true;
         console.log(response.data);
       } catch (error) {

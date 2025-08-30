@@ -33,14 +33,14 @@
 
 <script setup>
 import { useStore } from '@/stores/store.js';
-import { computed, ref } from 'vue';
+import { computed, reactive } from 'vue';
 
 import CoachItem from '@/components/coaches/CoachItem.vue';
 import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
 const store = useStore();
 
-const  activeFilters = ref({
+const  activeFilters = reactive({
   frontend: true,
   backend: true,
   career: true,
@@ -49,13 +49,13 @@ const  activeFilters = ref({
 const filteredCoaches = computed(() => {
   const coaches = store.coaches;
   return coaches.filter(coach => {
-    if (activeFilters.value.frontend && coach.areas.includes('frontend')) {
+    if (activeFilters.frontend && coach.areas.includes('frontend')) {
       return true;
     }
-    if (activeFilters.value.backend && coach.areas.includes('backend')) {
+    if (activeFilters.backend && coach.areas.includes('backend')) {
       return true;
     }
-    if (activeFilters.value.career && coach.areas.includes('career')) {
+    if (activeFilters.career && coach.areas.includes('career')) {
       return true;
     }
     return false;
@@ -72,6 +72,8 @@ const setFilters = updatedFilters => {
 const loadCoach = () => {
   store.fetchCoach();
 }
+
+store.fetchCoach();
 
 const handleError = () => store.error = null;
 </script>
