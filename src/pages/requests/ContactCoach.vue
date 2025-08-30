@@ -16,11 +16,11 @@
 </template>
 
 <script setup>
-import { useStore } from "@/stores/store";
+import { useRequestsStore } from "@/stores/requests.js";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-const store = useStore();
+const requestsStore = useRequestsStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -40,10 +40,10 @@ const submitForm = async () => {
     email: email.value,
     message: message.value,
   };
-  await store.addRequest(contactDetails);
-  if (store.check) {
+  await requestsStore.addRequest(contactDetails);
+  if (requestsStore.check) {
     router.replace("/coaches");
-    store.check = false;
+    requestsStore.check = false;
   }
 };
 </script>

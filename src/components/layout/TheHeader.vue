@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useStore } from '@/stores/store';
+import { useAuthStore } from '@/stores/auth.js';
 
-const store = useStore();
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -10,14 +10,14 @@ const store = useStore();
       <h1><router-link to="/">Find a Coach</router-link></h1>
       <ul>
         <li><router-link to="/coaches">All Coaches</router-link></li>
-        <li v-if="store.isLoggedIn">
+        <li v-if="authStore.isLoggedIn">
           <router-link to="/requests">Requests</router-link>
         </li>
         <li v-else>
           <router-link to="/auth">Login</router-link>
         </li>
-        <li v-if="store.isLoggedIn">
-          <base-button @click="store.logout">Logout</base-button>
+        <li v-if="authStore.isLoggedIn">
+          <base-button @click="authStore.logout">Logout</base-button>
         </li>
       </ul>
     </nav>

@@ -25,15 +25,15 @@
 </template>
 
 <script setup>
-import { useStore } from '@/stores/store';
+import { useCoachesStore } from '@/stores/coaches.js';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-const store = useStore();
+const coachesStore = useCoachesStore();
 const route = useRoute();
 
 const props = defineProps(['id']);
-const selectedCoach = computed(() => store.coaches.find(coach => coach.id === props.id));
+const selectedCoach = computed(() => coachesStore.coaches.find(coach => coach.id === props.id));
 
 const fullName = computed(() => selectedCoach.value ? selectedCoach.value.firstName + ' ' + selectedCoach.value.lastName : '');
 const contactLnk = computed(() => route.path +  '/contact');

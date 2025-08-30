@@ -1,7 +1,7 @@
 <template>
   <div>
-    <base-dialog :show="!!store.error" title="An error occurred!" @close="handleError">
-      <p>{{ store.error }}</p>
+    <base-dialog :show="!!coachesStore.error" title="An error occurred!" @close="handleError">
+      <p>{{ coachesStore.error }}</p>
     </base-dialog>
     <section>
       <base-card>
@@ -14,19 +14,19 @@
 
 <script setup>
 import CoachForm from '@/components/coaches/CoachForm.vue';
-import { useStore } from '@/stores/store';
+import { useCoachesStore } from '@/stores/coaches.js';
 import { useRouter } from 'vue-router';
 
-const store = useStore();
+const coachesStore = useCoachesStore();
 const router = useRouter();
 
 const saveData = async (data) => {
-  await store.registerCoach(data);
-  if (store.check) {
+  await coachesStore.registerCoach(data);
+  if (coachesStore.check) {
     router.replace("/coaches");
-    store.check = false;
+    coachesStore.check = false;
   }
 }
 
-const handleError = () => store.error = null;
+const handleError = () => coachesStore.error = null;
 </script>

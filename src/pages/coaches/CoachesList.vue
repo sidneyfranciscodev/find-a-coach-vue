@@ -1,7 +1,7 @@
 <template>
   <div>
-    <base-dialog :show="!!store.error" title="An error occurred!" @close="handleError">
-      <p>{{ store.error }}</p>
+    <base-dialog :show="!!coachesStore.error" title="An error occurred!" @close="handleError">
+      <p>{{ coachesStore.error }}</p>
     </base-dialog>
     <section>
       <coach-filter @change-filter="setFilters" />
@@ -10,10 +10,10 @@
       <base-card>
         <div class="controls">
           <base-button mode="outline" @click="loadCoach">Refresh</base-button>
-          <base-button v-if="!store.isLoggedIn" to="/auth" link>Login</base-button>
-          <base-button v-if="store.isLoggedIn && !isCoach && !store.isLoading" link to="/register">Register as Coach</base-button>
+          <base-button v-if="!authStore.isLoggedIn" to="/auth" link>Login</base-button>
+          <base-button v-if="authStore.isLoggedIn && !isCoach && !coachesStore.isLoading" link to="/register">Register as Coach</base-button>
         </div>
-        <div v-if="store.isLoading">
+        <div v-if="coachesStore.isLoading">
           <base-spinner></base-spinner>
         </div>
         <ul v-else-if="hasCoaches">
@@ -32,13 +32,15 @@
 </template>
 
 <script setup>
-import { useStore } from '@/stores/store.js';
+import { useCoachesStore } from '@/stores/coaches.js';
+import { useAuthStore } from '@/stores/auth.js';
 import { computed, reactive } from 'vue';
 
 import CoachItem from '@/components/coaches/CoachItem.vue';
 import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
-const store = useStore();
+const coachesStore = useCoachesStore();
+const authStore = useAuthStore();
 
 const  activeFilters = reactive({
   frontend: true,
@@ -47,7 +49,7 @@ const  activeFilters = reactive({
 });
 
 const filteredCoaches = computed(() => {
-  const coaches = store.coaches;
+  const coaches = coachesStore.coaches;
   return coaches.filter(coach => {
     if (activeFilters.frontend && coach.areas.includes('frontend')) {
       return true;
@@ -62,20 +64,20 @@ const filteredCoaches = computed(() => {
   });
 });
 
-const hasCoaches = computed(() => store.hasCoaches);
-const isCoach = computed(() => store.isCoach);
+const hasCoaches = computed(() => coachesStore.hasCoaches);
+const isCoach = computed(() => coachesStore.isCoach);
 
 const setFilters = updatedFilters => {
   activeFilters.value = updatedFilters;
 }
 
 const loadCoach = () => {
-  store.fetchCoach();
+  coachesStore.fetchCoach();
 }
 
-store.fetchCoach();
+coachesStore.fetchCoach();
 
-const handleError = () => store.error = null;
+const handleError = () => coachesStore.error = null;
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <base-dialog :show="!!store.error" title="An error occurred!" @close="handleError">
-      <p>{{ store.error }}</p>
+    <base-dialog :show="!!requestsStore.error" title="An error occurred!" @close="handleError">
+      <p>{{ requestsStore.error }}</p>
     </base-dialog>
     <section>
       <base-card>
@@ -9,10 +9,10 @@
           <h2>Requests Received</h2>
           <base-button mode="outline" @click="loadRequests">Refresh</base-button>
         </header>
-        <div v-if="store.isLoading">
+        <div v-if="requestsStore.isLoading">
           <base-spinner></base-spinner>
         </div>
-        <ul v-else-if="hasRequests && !store.isLoading">
+        <ul v-else-if="hasRequests && !requestsStore.isLoading">
           <request-item v-for="req in userRequests" :key="req.id" :email="req.email" :message="req.message">
           </request-item>
         </ul>
@@ -23,21 +23,21 @@
 </template>
 
 <script setup>
-import { useStore } from "@/stores/store";
-import { computed, ref } from "vue";
+import { useRequestsStore } from "@/stores/requests.js";
+import { computed } from "vue";
 import RequestItem from "@/components/requests/RequestItem.vue";
 
-const store = useStore();
+const requestsStore = useRequestsStore();
 
-const userRequests = computed(() => store.userRequests);
-const hasRequests = computed(() => store.hasRequests);
+const userRequests = computed(() => requestsStore.userRequests);
+const hasRequests = computed(() => requestsStore.hasRequests);
 
 const loadRequests = () => {
-  store.fetchRequests();
+  requestsStore.fetchRequests();
 }
-store.fetchRequests();
+requestsStore.fetchRequests();
 
-const handleError = () => store.error = null;
+const handleError = () => requestsStore.error = null;
 </script>
 
 <style scoped>

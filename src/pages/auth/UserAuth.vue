@@ -1,9 +1,9 @@
 <template>
   <div>
-    <base-dialog :show="!!store.error" title="An error ocurred" @close="handleError">
-      <p>{{ store.error }}</p>
+    <base-dialog :show="!!authStore.error" title="An error ocurred" @close="handleError">
+      <p>{{ authStore.error }}</p>
     </base-dialog>
-    <base-dialog :show="store.isLoading" title="Authenticating..." fixed>
+    <base-dialog :show="authStore.isLoading" title="Authenticating..." fixed>
       <base-spinner></base-spinner>
     </base-dialog>
     <base-card>
@@ -25,11 +25,11 @@
 </template>
 
 <script setup>
-import { useStore } from '@/stores/store';
+import { useAuthStore } from '@/stores/auth.js';
 import { useRouter } from 'vue-router';
 import { computed, ref } from 'vue';
 
-const store = useStore();
+const authStore = useAuthStore();
 const router = useRouter();
 
 const email = ref('');
@@ -45,24 +45,24 @@ const handleSubmit = async () => {
     return;
   }
   if (mode.value === 'login') {
-    await store.login({
+    await authStore.login({
       email: email.value,
       password: password.value,
     });
   } else {
-    await store.signup({
+    await authStore.signup({
       email: email.value,
       password: password.value,
     });
   }
-  if (store.check) {
+  if (authStore.check) {
     router.replace("/coaches");
-    store.check = false;
+    authStore.check = false;
   }
 };
 
 const handleError = () => {
-    store.error = null;
+    authStore.error = null;
 }
 
 const switchAuthMode = () => {
