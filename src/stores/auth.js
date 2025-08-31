@@ -100,6 +100,8 @@ export const useAuthStore = defineStore('auth', {
       this.userId = null;
       this.token = null;
       this.tokenExpire = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
     }
   },
 });
