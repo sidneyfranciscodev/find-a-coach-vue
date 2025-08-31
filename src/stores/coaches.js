@@ -4,24 +4,7 @@ import api from '@/api/axios';
 
 export const useCoachesStore = defineStore('coaches', {
   state: () => ({
-    coaches: [
-      {
-        id: 'c1',
-        firstName: 'Max',
-        lastName: 'Mad',
-        areas: ['frontend', 'backend'],
-        description: "I'm Max and I've worked as a freelance web developer for years.",
-        hourlyRate: 30,
-      },
-      {
-        id: 'c2',
-        firstName: 'Julie',
-        lastName: 'Jone',
-        areas: ['frontend', 'career'],
-        description: "I'm Julie I am a senior developer in a big company.",
-        hourlyRate: 30,
-      },
-    ],
+    coaches: [],
     isLoading : false,
     lastFetch: null,
     error: null,
@@ -77,6 +60,7 @@ export const useCoachesStore = defineStore('coaches', {
       try {
         const response = await api.get(`/coaches.json`);
         if (response.data) {
+          this.coaches = [];
           const coachesData = response.data;
           console.log(response.data);
           for (const key in coachesData) {

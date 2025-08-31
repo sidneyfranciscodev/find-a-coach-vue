@@ -49,15 +49,15 @@ const handleSubmit = async () => {
       email: email.value,
       password: password.value,
     });
+    if (authStore.check) {
+      router.replace("/coaches");
+      authStore.check = false;
+    }
   } else {
     await authStore.signup({
       email: email.value,
       password: password.value,
     });
-  }
-  if (authStore.check) {
-    router.replace("/coaches");
-    authStore.check = false;
   }
 };
 
