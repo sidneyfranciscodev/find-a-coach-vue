@@ -47,7 +47,7 @@ export const useCoachesStore = defineStore('coaches', {
     async registerCoach(payload) {
       const authStore = useAuthStore();
       const newCoach = {
-        id: authStore.userId,
+        coachId: authStore.userId,
         firstName: payload.firstName,
         lastName: payload.lastName,
         description: payload.description,
@@ -56,7 +56,7 @@ export const useCoachesStore = defineStore('coaches', {
       };
 
       try {
-        const response = await api.post(`/coaches/${newCoach.id}.json?auth=${authStore.token}`, newCoach);
+        const response = await api.put(`/coaches/${newCoach.coachId}.json?auth=${authStore.token}`, newCoach);
         this.check = true;
         console.log(response.data);
       } catch (error) {
