@@ -41,7 +41,11 @@ export const useCoachesStore = defineStore('coaches', {
       try {
         const response = await api.put(`/coaches/${newCoach.coachId}.json?auth=${authStore.token}`, newCoach);
         this.check = true;
-        console.log(response.data);
+        if (response.data) {
+          console.log(response.data);
+        } else {
+          throw new Error(response.message || 'Failed to register as a coach.');
+        }
       } catch (error) {
         this.error = 'Failed to register as a coach.';
         console.log(error);
@@ -62,7 +66,7 @@ export const useCoachesStore = defineStore('coaches', {
         if (response.data) {
           this.coaches = [];
           const coachesData = response.data;
-          console.log(response.data);
+
           for (const key in coachesData) {
             const coach = {
               id: key,

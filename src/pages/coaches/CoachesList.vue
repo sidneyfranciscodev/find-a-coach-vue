@@ -67,9 +67,7 @@ const filteredCoaches = computed(() => {
 const hasCoaches = computed(() => coachesStore.hasCoaches);
 const isCoach = computed(() => coachesStore.isCoach);
 
-const setFilters = updatedFilters => {
-  activeFilters.value = updatedFilters;
-}
+const setFilters = updatedFilters => Object.assign(activeFilters, updatedFilters);
 
 const loadCoaches = () => {
   coachesStore.fetchCoaches();
