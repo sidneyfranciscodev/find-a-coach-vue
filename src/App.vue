@@ -1,9 +1,22 @@
 <script setup>
 import TheHeader from './components/layout/TheHeader.vue';
 import { useAuthStore } from './stores/auth';
+import { computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
 authStore.autoLogin();
+
+const router = useRouter();
+
+const didAutoLogout = computed(() => authStore.didAutoLogout);
+
+watch(didAutoLogout, (curVal, oldVal) => {
+  if (curVal && curVal !== oldVal) {
+    router.replace('/coaches');
+    authStore.didAutoLogout = false;
+  }
+});
 </script>
 
 <template>
