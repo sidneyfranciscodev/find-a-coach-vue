@@ -26,11 +26,12 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth.js';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { computed, ref } from 'vue';
 
 const authStore = useAuthStore();
 const router = useRouter();
+const route = useRoute();
 
 const email = ref('');
 const password = ref('');
@@ -50,7 +51,8 @@ const handleSubmit = async () => {
       password: password.value,
     });
     if (authStore.check) {
-      router.replace("/coaches");
+      const redirectUrl = '/' + (route.query.redirect) || 'coaches';
+      router.replace(redirectUrl);
       authStore.check = false;
     }
   } else {
@@ -58,7 +60,7 @@ const handleSubmit = async () => {
       email: email.value,
       password: password.value,
     });
-  }
+  }  
 };
 
 const handleError = () => {
