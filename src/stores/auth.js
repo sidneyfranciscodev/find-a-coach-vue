@@ -2,12 +2,12 @@ import { defineStore } from 'pinia';
 import api from '@/api/axios';
 
 const API_KEY = 'AIzaSyAyONm-cWUKyKsfYXlj41Dl45aXzeGq_GY';
+let timer;
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     userId: null,
     token: null,
-    tokenExpire: null,
     isLoading : false,
     error: null,
     check: false,
@@ -32,10 +32,16 @@ export const useAuthStore = defineStore('auth', {
           this.userId = response.data.localId;
           this.token = response.data.idToken;
 
+          const expirationTime = new Date().getTime() + Number(response.data.expiresIn) * 1000;
+
           localStorage.setItem('token', response.data.idToken);
           localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('tokenExpiration', expirationTime);
 
-          this.tokenExpire = response.data.expiresIn;
+          timer = setTimeout(() => {
+            this.logout();
+          }, Number(response.data.expiresIn) * 1000);
+
           this.check = true;
           console.log(response.data);
         } else {
@@ -89,6 +95,16 @@ export const useAuthStore = defineStore('auth', {
     autoLogin() {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
+      const tokenExpiration = localStorage.getItem('tokenExpiration');
+      const expiresIn = Number(tokenExpiration) - new Date().getTime();
+
+      if (expiresIn < 0) {
+        return;
+      }
+      
+      timer = setTimeout(() => {
+        this.logout();
+      }, expiresIn);
 
       if (token && userId) {
         this.token = token;
@@ -102,6 +118,8 @@ export const useAuthStore = defineStore('auth', {
       this.tokenExpire = null;
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+      localStorage.removeItem('tokenExpiration');
+      clearTimeout(timer);
     }
   },
 });
