@@ -31,6 +31,10 @@ export const useAuthStore = defineStore('auth', {
         if (response.data) {
           this.userId = response.data.localId;
           this.token = response.data.idToken;
+
+          localStorage.setItem('token', response.data.idToken);
+          localStorage.setItem('userId', response.data.localId);
+
           this.tokenExpire = response.data.expiresIn;
           this.check = true;
           console.log(response.data);
@@ -64,6 +68,31 @@ export const useAuthStore = defineStore('auth', {
         console.log(error);
       } finally {
         this.isLoading = false;
+      }
+    },
+
+    async auth(payload) {
+      if (payload.mode === 'login') {
+        await this.login({
+          email: payload.email,
+          password: payload.password,
+        });
+      } else {
+        await this.signup({
+          email: payload.email,
+          password: payload.password,
+        });
+      }
+
+    },
+
+    autoLogin() {
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId');
+
+      if (token && userId) {
+        this.token = token;
+        this.userId = userId;
       }
     },
 

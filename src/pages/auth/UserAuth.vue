@@ -46,9 +46,10 @@ const handleSubmit = async () => {
     return;
   }
   if (mode.value === 'login') {
-    await authStore.login({
+    await authStore.auth({
       email: email.value,
       password: password.value,
+      mode: 'login',
     });
     if (authStore.check) {
       const redirectUrl = '/' + (route.query.redirect) || 'coaches';
@@ -56,9 +57,10 @@ const handleSubmit = async () => {
       authStore.check = false;
     }
   } else {
-    await authStore.signup({
+    await authStore.auth({
       email: email.value,
       password: password.value,
+      mode: 'signup',
     });
   }  
 };
