@@ -52,7 +52,7 @@ const handleSubmit = async () => {
       mode: 'login',
     });
     if (authStore.check) {
-      const redirectUrl = '/' + (route.query.redirect) || 'coaches';
+      const redirectUrl = route.query.redirect ? '/' + route.query.redirect : '/coaches';
       router.replace(redirectUrl);
       authStore.check = false;
     }
