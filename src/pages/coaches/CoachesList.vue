@@ -75,7 +75,7 @@ const loadCoaches = () => {
   coachesStore.fetchCoaches();
 }
 
-//coachesStore.fetchCoaches();
+coachesStore.fetchCoaches();
 
 const handleError = () => coachesStore.error = null;
 </script>
